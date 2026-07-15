@@ -58,7 +58,7 @@ public class Q10_ServletEmployee extends HttpServlet {
             stmt.executeUpdate(createTable);
 
             stmt.executeUpdate("DELETE FROM employee_details");
-            stmt.executeUpdate("INSERT INTO employee_details VALUES (1, 'Rahul Sharma', 'Delhi, India', '9876543210')");
+            stmt.executeUpdate("INSERT INTO employee_details VALUES (1, 'Aaditya Pratap Singh', 'Delhi, India', '9876543210')");
             stmt.executeUpdate("INSERT INTO employee_details VALUES (2, 'Priya Singh', 'Mumbai, India', '9123456789')");
             stmt.executeUpdate("INSERT INTO employee_details VALUES (3, 'Amit Kumar', 'Bangalore, India', '9988776655')");
             stmt.executeUpdate("INSERT INTO employee_details VALUES (4, 'Neha Gupta', 'Chennai, India', '9871234567')");

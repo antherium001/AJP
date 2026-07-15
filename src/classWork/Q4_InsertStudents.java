@@ -27,11 +27,11 @@ public class Q4_InsertStudents {
                 System.out.println("Table 'Students' ready.\n");
 
                 String[] insertStatements = {
-                    "INSERT INTO Students (id, name, age, grade) VALUES (1, 'Amit', 20, 'A')",
-                    "INSERT INTO Students (id, name, age, grade) VALUES (2, 'Sneha', 22, 'B')",
-                    "INSERT INTO Students (id, name, age, grade) VALUES (3, 'Vikram', 21, 'A')",
-                    "INSERT INTO Students (id, name, age, grade) VALUES (4, 'Neha', 23, 'C')",
-                    "INSERT INTO Students (id, name, age, grade) VALUES (5, 'Arjun', 20, 'B')"
+                    "INSERT INTO Students (id, name, age, grade) VALUES (100, 'Aaditya', 20, 'A')",
+                    "INSERT INTO Students (id, name, age, grade) VALUES (200, 'Sneha', 22, 'B')",
+                    "INSERT INTO Students (id, name, age, grade) VALUES (300, 'Vikram', 21, 'A')",
+                    "INSERT INTO Students (id, name, age, grade) VALUES (400, 'Neha', 23, 'C')",
+                    "INSERT INTO Students (id, name, age, grade) VALUES (500, 'Arjun', 20, 'B')"
                 };
 
                 for (String sql : insertStatements) {

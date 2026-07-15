@@ -25,9 +25,9 @@ public class Q9_TCLStatements {
                 stmt.executeUpdate(createTable);
 
                 stmt.executeUpdate("DELETE FROM Employee");
-                stmt.executeUpdate("INSERT INTO Employee VALUES (1, 'Rahul', 50000.00)");
-                stmt.executeUpdate("INSERT INTO Employee VALUES (2, 'Priya', 60000.00)");
-                stmt.executeUpdate("INSERT INTO Employee VALUES (3, 'Amit', 45000.00)");
+                stmt.executeUpdate("INSERT INTO Employee VALUES (100, 'Aaditya', 50000.00)");
+                stmt.executeUpdate("INSERT INTO Employee VALUES (200, 'Priya', 60000.00)");
+                stmt.executeUpdate("INSERT INTO Employee VALUES (300, 'Amit', 45000.00)");
                 System.out.println("Initial Employee records:");
                 printEmployees(stmt);
 
