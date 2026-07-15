@@ -1,0 +1,382 @@
+# AJP — Advanced Java Programming
+
+**Course:** Advanced Java Programming (AJP)
+**Topics:** JDBC Connectivity, Servlets, Session Tracking, Database Operations
+**Environment:** Java 21, Apache Tomcat 10.1.57, MySQL 9.x, Jakarta Servlet API 6.0
+
+---
+
+## Table of Contents
+
+- [Day 1 — JDBC](#day-1--jdbc)
+- [Day 2 — Servlets](#day-2--servlets)
+- [How to Run](#how-to-run)
+- [Tech Stack](#tech-stack)
+
+---
+
+## Day 1 — JDBC
+
+### Class Work
+
+---
+
+#### Q1 — JDBC Connectivity & CRUD Operations
+**File:** `src/classWork/Q1_JDBCConnectivity.java`
+
+Demonstrates basic JDBC connectivity: loads the MySQL driver, connects to the database, creates an `employees` table, inserts two rows, performs SELECT, UPDATE, and DELETE operations.
+
+```bash
+# Run from Eclipse: Right-click → Run As → Java Application
+```
+
+![Q1 Output](Pictures/q1.png)
+
+---
+
+#### Q2 — Create `emp` Table and Insert Rows
+**File:** `src/classWork/Q2_EmpTable.java`
+
+Creates a table `emp` with fields `id`, `name`, `city` and inserts two rows using JDBC `Statement`. Verifies the data by querying and printing all records.
+
+![Q2 Output](Pictures/q2.png)
+
+---
+
+#### Q3 — Create `Students` Table
+**File:** `src/classWork/Q3_CreateStudents.java`
+
+Uses `Statement` to create a table `Students` with fields `id`, `name`, `age`, and `grade`. Verifies table creation using database metadata.
+
+![Q3 Output](Pictures/q3.png)
+
+---
+
+#### Q4 — Insert Multiple Records into Students
+**File:** `src/classWork/Q4_InsertStudents.java`
+
+Inserts five student records into the `Students` table using multiple `Statement.executeUpdate()` calls. Displays all records after insertion.
+
+![Q4 Output](Pictures/q4.png)
+
+---
+
+#### Q5 — Money Transfer Transaction
+**File:** `src/classWork/Q5_MoneyTransfer.java`
+
+Demonstrates transaction management: transfers Rs.3000 from Account 1 (Ravi) to Account 2 (Suresh) using `setAutoCommit(false)`, `commit()`, and `rollback()`. Ensures both debit and credit are atomic.
+
+![Q5 Output](Pictures/q5.png)
+
+---
+
+#### Q6 — Delete Students Below Grade Threshold
+**File:** `src/classWork/Q6_DeleteByGrade.java`
+
+Uses `PreparedStatement` to delete student records where the grade is below a user-specified threshold. Takes grade input via `Scanner` and executes parameterized DELETE query.
+
+![Q6 Output](Pictures/q6.png)
+
+---
+
+### Home Assignment
+
+---
+
+#### Q7 — Batch Insert with PreparedStatement
+**File:** `src/homeWork/Q7_BatchInsert.java`
+
+Efficiently inserts multiple records using `PreparedStatement` batch execution (`addBatch()` / `executeBatch()`). Inserts 8 student records in a single batch with transaction control.
+
+![Q7 Output](Pictures/q7.png)
+
+---
+
+#### Q8 — Stored Procedure: Total Salary
+**File:** `src/homeWork/Q8_StoredProcedure.java`
+
+Creates a MySQL stored procedure `TotalSalary` that calculates the total salary of employees in a given department. Calls it using `CallableStatement` with an OUT parameter.
+
+![Q8 Output](Pictures/q8.png)
+
+---
+
+#### Q9 — TCL Statements Demo
+**File:** `src/homeWork/Q9_TCLStatements.java`
+
+Demonstrates Transaction Control Language: `setAutoCommit(false)`, `commit()`, `rollback()`, `setSavepoint()`, and `releaseSavepoint()` on an `Employee` table. Shows full transaction lifecycle.
+
+![Q9 Output](Pictures/q9.png)
+
+---
+
+## Day 2 — Servlets
+
+### Class Work
+
+---
+
+#### Q10 — Servlet: Employee Details Display
+**File:** `src/homeWork/servlet/Q10_ServletEmployee.java`
+**URL:** `http://localhost:8080/AJP/EmployeeDetails`
+
+Servlet that selects employee details (emp_id, empname, empadd, empphone) from the database and displays them in an HTML table on the browser.
+
+![Q10 Output](Pictures/q10.png)
+
+---
+
+#### Q11 — GenericServlet: Employee Registration
+**File:** `src/classWork/servlet/Q11_EmployeeRegistration.java`
+**Form:** `WebContent/employee_registration.html`
+**URL:** `http://localhost:8080/AJP/employee_registration.html`
+
+A `GenericServlet` that accepts employee details (name, email, designation, salary) via POST form, stores them in the database using JDBC, and displays a success message.
+
+![Q11 Output](Pictures/Q11.png)
+
+---
+
+#### Q12 — Servlet: Name and Password Display
+**File:** `src/classWork/servlet/Q12_NamePassword.java`
+**Form:** `WebContent/name_password_form.html`
+**URL:** `http://localhost:8080/AJP/name_password_form.html`
+
+Receives Name and Password from an HTML page via POST and displays them on the browser.
+
+![Q12 Output](Pictures/Q12.png)
+
+---
+
+#### Q13 — Servlet: Redirect to Google
+**File:** `src/classWork/servlet/Q13_RedirectToGoogle.java`
+**URL:** `http://localhost:8080/AJP/RedirectToGoogle`
+
+Uses `sendRedirect()` to redirect the request to `https://www.google.com`.
+
+---
+
+#### Q14 — Session Handling with HttpSession
+**File:** `src/classWork/servlet/Q14_HttpSessionDemo.java`
+**Form:** `WebContent/session_form.html`
+**URL:** `http://localhost:8080/AJP/session_form.html`
+
+Demonstrates session tracking using `HttpSession`. Stores user name and email as session attributes, displays session ID and stored data.
+
+![Q14 Output](Pictures/14A.png)
+
+![Q14 Session Data](Pictures/14B.png)
+
+---
+
+#### Q15 — Session Handling with URL Rewriting
+**File:** `src/classWork/servlet/Q15_URLRewriting.java`
+**Form:** `WebContent/urlrewrite_form.html`
+**URL:** `http://localhost:8080/AJP/urlrewrite_form.html`
+
+Implements session tracking using URL rewriting via `response.encodeURL()`. Session data persists through rewritten URLs containing the session ID.
+
+![Q15 Output](Pictures/15A.png)
+
+![Q15 Rewritten URL](Pictures/15B.png)
+
+---
+
+#### Q16 — Cookie ID with Session
+**File:** `src/classWork/servlet/Q16_CookieSession.java`
+**URL:** `http://localhost:8080/AJP/CookieSession`
+
+Displays the JSESSIONID cookie along with session details (ID, creation time, last accessed time) and lists all cookies sent by the browser.
+
+![Q16 Output](Pictures/16.png)
+
+---
+
+#### Q17 — Servlet: User Form Display
+**File:** `src/classWork/servlet/Q17_UserFormServlet.java`
+**Form:** `WebContent/user_form.html`
+**URL:** `http://localhost:8080/AJP/user_form.html`
+
+Takes three inputs — User Name, User Password, and User Mobile — from an HTML form and displays them on the browser in a formatted table.
+
+![Q17 Output](Pictures/Q17.png)
+
+---
+
+### Home Assignment
+
+---
+
+#### Q18 — Servlet: Select Employee Details
+**File:** `src/homeWork/servlet/Q18_EmpSelectServlet.java`
+**URL:** `http://localhost:8080/AJP/EmpSelect`
+
+Selects employee details (emp_id, empname, empadd, empphone) from the database and displays them in an HTML table on the browser.
+
+![Q18 Output](Pictures/18.png)
+
+---
+
+#### Q19 — Cookies: Add and Access Data
+**File:** `src/homeWork/servlet/Q19_CookieDemo.java`
+**Form:** `WebContent/cookie_form.html`
+**URL:** `http://localhost:8080/AJP/cookie_form.html`
+
+Adds custom data to cookies and also accesses and displays all existing cookies from the browser.
+
+![Q19 Output](Pictures/19.png)
+
+---
+
+#### Q20 — Redirect to HTML File
+**File:** `src/homeWork/servlet/Q20_RedirectToHTML.java`
+**Target:** `WebContent/redirect_target.html`
+**URL:** `http://localhost:8080/AJP/RedirectToHTML`
+
+Implements redirection to other resources — redirects to a static HTML page using `sendRedirect()`.
+
+![Q20 Output](Pictures/20A.png)
+
+![Q20 Target Page](Pictures/20B.png)
+
+---
+
+#### Q21 — Registration Form with Database
+**File:** `src/homeWork/servlet/Q21_RegistrationServlet.java`
+**Form:** `WebContent/registration.html`
+**URL:** `http://localhost:8080/AJP/registration.html`
+
+Full registration flow: form with name, password, email, phone. Inserts into database on submit, displays all registered users. Table contains: name, password, email-id, phone number.
+
+![Q21 Output](Pictures/21A.png)
+
+![Q21 Users List](Pictures/21B.png)
+
+---
+
+#### Q22a — Book Query Servlet with JDBC
+**File:** `src/homeWork/servlet/Q22_BookQueryServlet.java`
+**Form:** `WebContent/book_query.html`
+**URL:** `http://localhost:8080/AJP/book_query.html`
+
+Servlet to query book details (book_id, book_name, book_author, published_date) using JDBC. Supports search by book ID and displays all records.
+
+![Q22a Output](Pictures/22A.png)
+
+![Q22a Search](Pictures/22B.png)
+
+---
+
+#### Q22b — Simple Application Suite
+
+##### Login Form
+**File:** `src/homeWork/servlet/Q22b_LoginServlet.java`
+**Form:** `WebContent/login.html`
+**URL:** `http://localhost:8080/AJP/login.html`
+
+Simple login form that validates credentials against the database. New users are auto-registered on first login attempt.
+
+##### Customer Feedback Form
+**File:** `src/homeWork/servlet/Q22b_FeedbackServlet.java`
+**Form:** `WebContent/feedback.html`
+**URL:** `http://localhost:8080/AJP/feedback.html`
+
+Customer feedback form capturing name, email, rating (1-5), and comments. Stores submissions in the database.
+
+##### Admission Form
+**File:** `src/homeWork/servlet/Q22b_AdmissionServlet.java`
+**Form:** `WebContent/admission.html`
+**URL:** `http://localhost:8080/AJP/admission.html`
+
+Student admission form with fields: student name, father's name, DOB, course selection, email, phone, and address. Stores all data in MySQL.
+
+##### Student Mark Sheet
+**File:** `src/homeWork/servlet/Q22b_MarkSheetServlet.java`
+**Form:** `WebContent/marksheet.html`
+**URL:** `http://localhost:8080/AJP/marksheet.html`
+
+Takes student marks in Maths, English, Science, and Computer Science. Calculates total, percentage, and grade (A+ to F). Generates a formatted mark sheet.
+
+![Q22b Output](Pictures/22C.png)
+
+![Q22b Mark Sheet](Pictures/22D.png)
+
+---
+
+## How to Run
+
+### JDBC Programs (Q1-Q9)
+
+These are standalone Java applications with `main()` methods. No server needed.
+
+1. Ensure MySQL is running on `localhost:3306`
+2. Create databases: `demo_db`, `bank_db`, `company`, `employee_db`
+3. Run from Eclipse: Right-click file → **Run As → Java Application**
+4. Or compile and run from command line:
+   ```bash
+   javac --release 21 -cp "mysql-connector-j-9.7.0.jar" -d bin src/classWork/Q1_JDBCConnectivity.java
+   java -cp "bin;mysql-connector-j-9.7.0.jar" classWork.Q1_JDBCConnectivity
+   ```
+
+### Servlet Programs (Q10-Q22b)
+
+These require Apache Tomcat 10.1.57.
+
+1. Start Tomcat: run `C:\apache-tomcat-10.1.57\bin\startup.bat`
+2. Compile all servlets with `compile.bat` (targets Java 21 automatically)
+3. Deploy the `build/AJP` folder to `C:\apache-tomcat-10.1.57\webapps\AJP`
+4. Open browser and navigate to the URLs listed above
+
+### Quick Reference: All Servlet URLs
+
+| Q | URL |
+|---|-----|
+| 10 | `http://localhost:8080/AJP/EmployeeDetails` |
+| 11 | `http://localhost:8080/AJP/employee_registration.html` |
+| 12 | `http://localhost:8080/AJP/name_password_form.html` |
+| 13 | `http://localhost:8080/AJP/RedirectToGoogle` |
+| 14 | `http://localhost:8080/AJP/session_form.html` |
+| 15 | `http://localhost:8080/AJP/urlrewrite_form.html` |
+| 16 | `http://localhost:8080/AJP/CookieSession` |
+| 17 | `http://localhost:8080/AJP/user_form.html` |
+| 18 | `http://localhost:8080/AJP/EmpSelect` |
+| 19 | `http://localhost:8080/AJP/cookie_form.html` |
+| 20 | `http://localhost:8080/AJP/RedirectToHTML` |
+| 21 | `http://localhost:8080/AJP/registration.html` |
+| 22a | `http://localhost:8080/AJP/book_query.html` |
+| 22b | `http://localhost:8080/AJP/login.html` |
+| 22b | `http://localhost:8080/AJP/feedback.html` |
+| 22b | `http://localhost:8080/AJP/admission.html` |
+| 22b | `http://localhost:8080/AJP/marksheet.html` |
+
+---
+
+## Tech Stack
+
+| Component | Version |
+|-----------|---------|
+| Java | 21 (compiled with JDK 26, targeting release 21) |
+| Apache Tomcat | 10.1.57 |
+| MySQL | 9.x |
+| MySQL Connector/J | 9.7.0 |
+| Jakarta Servlet API | 6.0 (from Tomcat) |
+| IDE | Eclipse |
+
+---
+
+## Database Configuration
+
+All programs use:
+- **Host:** `localhost:3306`
+- **Username:** `root`
+- **Password:** `root`
+
+Databases used:
+| Database | Used By |
+|----------|---------|
+| `demo_db` | Q1, Q2, Q3, Q4, Q6, Q7, Q10, Q11, Q12, Q17, Q21, Q22a, Q22b |
+| `bank_db` | Q5 |
+| `company` | Q8 |
+| `employee_db` | Q9, Q10, Q18 |
+
+Tables are auto-created by each program if they don't exist.
