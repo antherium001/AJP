@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Form</title>
+</head>
+<body>
+    <h2>Enter User Details</h2>
+    <form action="UserForm" method="post">
+        <label>User Name:</label><br>
+        <input type="text" name="userName" required><br><br>
+        <label>User Password:</label><br>
+        <input type="password" name="userPassword" required><br><br>
+        <label>User Mobile:</label><br>
+        <input type="tel" name="userMobile" pattern="[0-9]{10}" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

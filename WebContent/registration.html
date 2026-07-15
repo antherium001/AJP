@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <h2>User Registration Form</h2>
+    <form action="Registration" method="post">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Phone:</label><br>
+        <input type="tel" name="phone" pattern="[0-9]{10}" required><br><br>
+        <input type="submit" value="Register">
+    </form>
+    <br>
+    <a href="Registration">View All Registered Users</a>
+</body>
+</html>

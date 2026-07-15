@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Feedback</title>
+</head>
+<body>
+    <h2>Customer Feedback Form</h2>
+    <form action="Feedback" method="post">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+        <label>Rating (1-5):</label><br>
+        <input type="number" name="rating" min="1" max="5" required><br><br>
+        <label>Comments:</label><br>
+        <textarea name="comments" rows="4" cols="40" required></textarea><br><br>
+        <input type="submit" value="Submit Feedback">
+    </form>
+</body>
+</html>
