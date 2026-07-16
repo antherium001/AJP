@@ -20,7 +20,7 @@ public class Q22b_LoginServlet extends HttpServlet {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/demo_db";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "root";
+    private static final String DB_PASS = "aaditya@123";
 
     @Override
     public void init() throws ServletException {

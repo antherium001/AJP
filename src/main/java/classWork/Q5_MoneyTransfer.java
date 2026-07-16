@@ -10,7 +10,7 @@ public class Q5_MoneyTransfer {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/bank_db";
         String username = "root";
-        String password = "root";
+        String password = "aaditya@123";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -12,7 +12,7 @@ public class Q6_DeleteByGrade {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/demo_db";
         String username = "root";
-        String password = "root";
+        String password = "aaditya@123";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

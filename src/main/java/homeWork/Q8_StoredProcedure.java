@@ -13,7 +13,7 @@ public class Q8_StoredProcedure {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/company";
         String username = "root";
-        String password = "root";
+        String password = "aaditya@123";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -19,7 +19,7 @@ public class Q18_EmpSelectServlet extends HttpServlet {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/employee_db";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "root";
+    private static final String DB_PASS = "aaditya@123";
 
     @Override
     public void init() throws ServletException {

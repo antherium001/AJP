@@ -41,12 +41,19 @@ tomcat_stop() {
 run_jdbc() {
     if [ -z "$1" ]; then
         echo "Usage: $0 runjdbc <class-name>"
-        echo "Example: $0 runjdbc classWork.Q1_JDBCConnectivity"
+        echo "Examples:"
+        echo "  $0 runjdbc classWork.Q1_JDBCConnectivity"
+        echo "  $0 runjdbc classWork.Q2_EmpTable"
+        echo "  $0 runjdbc homeWork.Q7_BatchInsert"
         exit 1
     fi
     cd "$PROJECT_DIR"
     mvn compile -q -f pom.xml
-    classpath="$PROJECT_DIR/target/classes:$PROJECT_DIR/lib/mysql-connector-j-9.7.0.jar"
+    connector_jar="$PROJECT_DIR/mysql-connector-j-9.7.0.jar"
+    if [ ! -f "$connector_jar" ]; then
+        connector_jar="$PROJECT_DIR/src/main/webapp/WEB-INF/lib/mysql-connector-j-9.7.0.jar"
+    fi
+    classpath="$PROJECT_DIR/target/classes:$connector_jar"
     echo "=== Running $1 ==="
     java -cp "$classpath" "$1"
 }

@@ -303,6 +303,64 @@ Takes student marks in Maths, English, Science, and Computer Science. Calculates
 
 ---
 
+### Day 3 — JSP Programs
+
+---
+
+#### Q31 — File Upload to Server
+**File:** `src/main/webapp/Q31_upload.jsp`
+**URL:** `http://localhost:8080/AJP/Q31_upload.jsp`
+
+JSP page with a file upload form. Uses `request.getPart()` (Jakarta Servlet 6.0) to handle multipart upload. Stores files in `WEB-INF/uploads/` and displays file name, size, and upload time.
+
+---
+
+#### Q32 — Visitor Counter
+**File:** `src/main/webapp/Q32_visitor.jsp`
+**URL:** `http://localhost:8080/AJP/Q32_visitor.jsp`
+
+JSP page with a submit button that increments a visitor count stored in the `application` (ServletContext) scope. Demonstrates the `application` implicit object. Counter resets when the server restarts.
+
+![Q32 Output](Pictures/32.png)
+
+---
+
+#### Q33 — Session Tracking: Color Selection
+**Files:** `src/main/webapp/Q33_index.jsp`, `src/main/webapp/Q33_print.jsp`
+**URL:** `http://localhost:8080/AJP/Q33_index.jsp`
+
+Two-page JSP demo for session tracking. `Q33_index.jsp` displays a list of colors (Red, Green, Blue, Yellow, Purple, Orange) in a selection box. On submit, `Q33_print.jsp` stores the selection in session, displays the chosen color and its string length. Session preserves the selection across page visits.
+
+**Flow:**
+1. User opens `Q33_index.jsp` — sees color array and length of each
+2. User selects a color and submits
+3. `Q33_print.jsp` stores color in `session` and displays it along with its character count
+4. Refreshing `Q33_print.jsp` or navigating back to `Q33_index.jsp` preserves the selection via session
+
+![Q33 Index Page](Pictures/33A.png)
+
+![Q33 Print Page](Pictures/33B.png)
+
+---
+
+#### Q34 — Arithmetic Exception Error Handling
+**Files:** `src/main/webapp/Q34_arith.html`, `src/main/webapp/Q34_calculate.jsp`, `src/main/webapp/Q34_error.jsp`
+**URL:** `http://localhost:8080/AJP/Q34_arith.html`
+
+Demonstrates JSP error handling directives:
+- **`errorPage`** directive in `Q34_calculate.jsp` points to `Q34_error.jsp`
+- **`isErrorPage`** directive in `Q34_error.jsp` enables the `exception` implicit object
+
+**Flow:**
+1. User enters two numbers in `Q34_arith.html` and submits
+2. `Q34_calculate.jsp` performs division
+3. If divisor is 0, an `ArithmeticException` is thrown and control passes to `Q34_error.jsp`
+4. `Q34_error.jsp` displays exception type, message, and explains the directive usage
+
+![Q34 Output](Pictures/34.png)
+
+---
+
 ## How to Run
 
 ### Using Maven (Linux / macOS / Windows WSL)
@@ -388,25 +446,29 @@ These require Apache Tomcat 10.1.x.
 
 ### Quick Reference: All Servlet URLs
 
-| Q | URL |
-|---|-----|
-| 10 | `http://localhost:8080/AJP/EmployeeDetails` |
-| 11 | `http://localhost:8080/AJP/employee_registration.html` |
-| 12 | `http://localhost:8080/AJP/name_password_form.html` |
-| 13 | `http://localhost:8080/AJP/RedirectToGoogle` |
-| 14 | `http://localhost:8080/AJP/session_form.html` |
-| 15 | `http://localhost:8080/AJP/urlrewrite_form.html` |
-| 16 | `http://localhost:8080/AJP/CookieSession` |
-| 17 | `http://localhost:8080/AJP/user_form.html` |
-| 18 | `http://localhost:8080/AJP/EmpSelect` |
-| 19 | `http://localhost:8080/AJP/cookie_form.html` |
-| 20 | `http://localhost:8080/AJP/RedirectToHTML` |
-| 21 | `http://localhost:8080/AJP/registration.html` |
-| 22a | `http://localhost:8080/AJP/book_query.html` |
-| 22b | `http://localhost:8080/AJP/login.html` |
-| 22b | `http://localhost:8080/AJP/feedback.html` |
-| 22b | `http://localhost:8080/AJP/admission.html` |
-| 22b | `http://localhost:8080/AJP/marksheet.html` |
+| Q | Type | URL |
+|---|------|-----|
+| 10 | Servlet | `http://localhost:8080/AJP/EmployeeDetails` |
+| 11 | Servlet | `http://localhost:8080/AJP/employee_registration.html` |
+| 12 | Servlet | `http://localhost:8080/AJP/name_password_form.html` |
+| 13 | Servlet | `http://localhost:8080/AJP/RedirectToGoogle` |
+| 14 | Servlet | `http://localhost:8080/AJP/session_form.html` |
+| 15 | Servlet | `http://localhost:8080/AJP/urlrewrite_form.html` |
+| 16 | Servlet | `http://localhost:8080/AJP/CookieSession` |
+| 17 | Servlet | `http://localhost:8080/AJP/user_form.html` |
+| 18 | Servlet | `http://localhost:8080/AJP/EmpSelect` |
+| 19 | Servlet | `http://localhost:8080/AJP/cookie_form.html` |
+| 20 | Servlet | `http://localhost:8080/AJP/RedirectToHTML` |
+| 21 | Servlet | `http://localhost:8080/AJP/registration.html` |
+| 22a | Servlet | `http://localhost:8080/AJP/book_query.html` |
+| 22b | Servlet | `http://localhost:8080/AJP/login.html` |
+| 22b | Servlet | `http://localhost:8080/AJP/feedback.html` |
+| 22b | Servlet | `http://localhost:8080/AJP/admission.html` |
+| 22b | Servlet | `http://localhost:8080/AJP/marksheet.html` |
+| 31 | JSP | `http://localhost:8080/AJP/Q31_upload.jsp` |
+| 32 | JSP | `http://localhost:8080/AJP/Q32_visitor.jsp` |
+| 33 | JSP | `http://localhost:8080/AJP/Q33_index.jsp` |
+| 34 | JSP | `http://localhost:8080/AJP/Q34_arith.html` |
 
 ---
 
@@ -459,7 +521,7 @@ AJP/
 All programs use:
 - **Host:** `localhost:3306`
 - **Username:** `root`
-- **Password:** `root`
+- **Password:** `aaditya@123`
 
 Databases used:
 | Database | Used By |
