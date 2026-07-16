@@ -305,27 +305,86 @@ Takes student marks in Maths, English, Science, and Computer Science. Calculates
 
 ## How to Run
 
-### JDBC Programs (Q1-Q9)
+### Using Maven (Linux / macOS / Windows WSL)
 
-These are standalone Java applications with `main()` methods. No server needed.
+This project uses **Maven** for building. All sources are under `src/main/java/` and web content under `src/main/webapp/`.
 
-1. Ensure MySQL is running on `localhost:3306`
-2. Create databases: `demo_db`, `bank_db`, `company`, `employee_db`
-3. Run from Eclipse: Right-click file → **Run As → Java Application**
-4. Or compile and run from command line:
+#### Build and Package
+
+```bash
+# Build the WAR file
+mvn clean package
+
+# WAR is created at: target/AJP.war
+```
+
+#### Run JDBC Programs (Q1-Q9)
+
+These are standalone Java applications. No server needed.
+
+```bash
+# 1. Compile all code
+mvn compile
+
+# 2. Run a specific JDBC program
+java -cp "target/classes:mysql-connector-j-9.7.0.jar" classWork.Q1_JDBCConnectivity
+java -cp "target/classes:mysql-connector-j-9.7.0.jar" classWork.Q2_EmpTable
+java -cp "target/classes:mysql-connector-j-9.7.0.jar" homeWork.Q7_BatchInsert
+
+# Or use the convenience script:
+./compile.sh runjdbc classWork.Q1_JDBCConnectivity
+```
+
+Note: Ensure MySQL is running on `localhost:3306` and the databases are created (`demo_db`, `bank_db`, `company`, `employee_db`).
+
+#### Run Servlet Programs (Q10-Q22b)
+
+These require Apache Tomcat 10.1.x.
+
+1. **Build the WAR:**
    ```bash
-   javac --release 21 -cp "mysql-connector-j-9.7.0.jar" -d bin src/classWork/Q1_JDBCConnectivity.java
-   java -cp "bin;mysql-connector-j-9.7.0.jar" classWork.Q1_JDBCConnectivity
+   mvn clean package
    ```
 
-### Servlet Programs (Q10-Q22b)
+2. **Deploy to Tomcat:**
+   ```bash
+   # Copy the generated WAR to Tomcat's webapps directory
+   cp target/AJP.war ~/opt/tomcat/webapps/
+   
+   # Or use the convenience script
+   ./compile.sh deploy
+   ```
 
-These require Apache Tomcat 10.1.57.
+3. **Start Tomcat:**
+   ```bash
+   ~/opt/tomcat/bin/startup.sh
+   # Or: ./compile.sh tomcat-start
+   ```
 
-1. Start Tomcat: run `C:\apache-tomcat-10.1.57\bin\startup.bat`
-2. Compile all servlets with `compile.bat` (targets Java 21 automatically)
-3. Deploy the `build/AJP` folder to `C:\apache-tomcat-10.1.57\webapps\AJP`
-4. Open browser and navigate to the URLs listed above
+4. **Open browser** and navigate to `http://localhost:8080/AJP/` URLs listed below
+
+5. **Stop Tomcat:**
+   ```bash
+   ~/opt/tomcat/bin/shutdown.sh
+   # Or: ./compile.sh tomcat-stop
+   ```
+
+### Using compile.sh (Convenience Script)
+
+```bash
+./compile.sh build          # Build WAR only
+./compile.sh deploy         # Build and copy to Tomcat
+./compile.sh tomcat-start   # Start Tomcat server
+./compile.sh tomcat-stop    # Stop Tomcat server
+./compile.sh runjdbc Q1     # Run Q1 JDBC program (use class name as shorthand)
+```
+
+### Using compile.bat (Windows / Eclipse)
+
+1. Ensure Java 21, Tomcat 10.1.57, and MySQL are installed.
+2. Open `compile.bat` and update paths if needed.
+3. Run `compile.bat` from the command line.
+4. For JDBC programs (Q1-Q9), compile and run directly with javac/java.
 
 ### Quick Reference: All Servlet URLs
 
@@ -355,12 +414,43 @@ These require Apache Tomcat 10.1.57.
 
 | Component | Version |
 |-----------|---------|
-| Java | 21 (compiled with JDK 26, targeting release 21) |
+| Java | 21 |
 | Apache Tomcat | 10.1.57 |
 | MySQL | 9.x |
 | MySQL Connector/J | 9.7.0 |
-| Jakarta Servlet API | 6.0 (from Tomcat) |
-| IDE | Eclipse |
+| Jakarta Servlet API | 6.0 |
+| Build System | Maven 3.9+ |
+| IDE | VS Code (recommended) or Eclipse |
+
+## Project Structure
+
+```
+AJP/
+├── pom.xml                         # Maven build file
+├── compile.sh                      # Linux build/deploy convenience script
+├── compile.bat                     # Windows build script (legacy)
+├── mysql-connector-j-9.7.0.jar     # MySQL JDBC driver
+├── src/
+│   └── main/
+│       ├── java/                   # Java sources
+│       │   ├── classWork/          # JDBC standalone programs (Q1-Q6)
+│       │   │   └── servlet/        # Classwork servlets (Q11-Q17)
+│       │   └── homeWork/           # JDBC standalone programs (Q7-Q9)
+│       │       └── servlet/        # Homework servlets (Q10, Q18-Q22b)
+│       └── webapp/                 # Web content
+│           ├── WEB-INF/
+│           │   ├── web.xml         # Deployment descriptor
+│           │   └── lib/            # JARs (mysql-connector)
+│           └── *.html              # Static HTML forms
+├── .vscode/                        # VS Code workspace config
+│   ├── settings.json
+│   ├── tasks.json
+│   └── extensions.json
+├── target/                         # Maven build output (gitignored)
+│   ├── classes/
+│   └── AJP.war
+├── Pictures/                       # Screenshots
+└── README.md
 
 ---
 
