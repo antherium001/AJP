@@ -1,8 +1,8 @@
 # AJP — Advanced Java Programming
 
 **Course:** Advanced Java Programming (AJP)
-**Topics:** JDBC Connectivity, Servlets, Session Tracking, Database Operations
-**Environment:** Java 21, Apache Tomcat 10.1.57, MySQL 9.x, Jakarta Servlet API 6.0
+**Topics:** JDBC Connectivity, Servlets, Session Tracking, Database Operations, Spring Framework, Spring Boot
+**Environment:** Java 21, Apache Tomcat 10.1.57, MySQL 9.x, Jakarta Servlet API 6.0, Spring 6.1.x, Spring Boot 3.2.x
 
 ---
 
@@ -10,6 +10,10 @@
 
 - [Day 1 — JDBC](#day-1--jdbc)
 - [Day 2 — Servlets](#day-2--servlets)
+- [Day 3 — JSP Programs](#day-3--jsp-programs)
+- [Day 4 — JSP Assignments](#day-4--jsp-assignments)
+- [Day 5 — Spring Framework](#day-5--spring-framework)
+- [Day 6 — Spring Boot](#day-6--spring-boot)
 - [How to Run](#how-to-run)
 - [Tech Stack](#tech-stack)
 
@@ -361,6 +365,238 @@ Demonstrates JSP error handling directives:
 
 ---
 
+#### Q39 — Select Employee Records from Database
+**File:** `src/main/webapp/Q39_empSelect.jsp`
+**URL:** `http://localhost:8080/AJP/Q39_empSelect.jsp`
+
+JSP page that connects to the `employee_db` database and selects all records from the `Employee` table. Creates the table if it doesn't exist and seeds 5 sample employee records (id, name, salary). Displays results in a styled HTML table.
+
+**Flow:**
+1. User opens `Q39_empSelect.jsp` in the browser
+2. JSP establishes JDBC connection and creates `Employee` table if needed
+3. Seeds 5 sample records if the table is empty
+4. Executes `SELECT * FROM Employee` and displays all records in a table
+
+![Q39 Output](Pictures/39.png)
+
+---
+
+#### Q40 — Registration, Login & Shopping Cart
+
+##### Q40a — User Registration (Insert Users)
+**File:** `src/main/webapp/Q40a_register.jsp`
+**URL:** `http://localhost:8080/AJP/Q40a_register.jsp`
+
+JSP page with a self-submitting registration form. Seeds 4 pre-registered users (Amit, Priya, Rahul, Neha) on first visit. New users can register via the form (name, password, email, phone). After registration, displays all registered users in a table.
+
+**Flow:**
+1. User opens `Q40a_register.jsp` — 4 users are auto-inserted if table is empty
+2. User fills in the registration form and submits
+3. User details are inserted into `registered_users` table in `demo_db`
+4. All registered users are displayed in a table below the form
+
+![Q40a Output](Pictures/40a.png)
+
+##### Q40b — Login Authentication
+**File:** `src/main/webapp/Q40b_login.jsp`
+**URL:** `http://localhost:8080/AJP/Q40b_login.jsp`
+
+JSP page that authenticates a user against the `registered_users` database table. Validates username and password using a parameterized query. On success, stores the user in the session and redirects to the shopping cart. On failure, displays an error with a link to register.
+
+**Flow:**
+1. User enters name and password in the login form
+2. JSP queries `registered_users` table for a matching record
+3. If found: sets `loggedUser` session attribute, redirects to product page
+4. If not found: displays "Invalid username or password" error
+
+![Q40b Output](Pictures/40b.png)
+
+##### Q40c — Shopping Cart (Session Tracking)
+**File:** `src/main/java/homeWork/servlet/Q40c_ShoppingCartServlet.java`
+**URL:** `http://localhost:8080/AJP/ShoppingCart`
+
+Servlet implementing a simple shopping cart using `HttpSession` and `ArrayList<String>`. Users can add products, view cart contents, and clear the cart. Session tracking persists the cart across requests. Shows session ID and cart item count.
+
+**Flow:**
+1. After login, user is redirected to `Q40_products.html` (product selection page)
+2. User selects products via checkboxes and clicks "Add to Cart"
+3. Servlet adds selected items to the session's `ArrayList<String>` cart
+4. User can view cart, continue shopping, or clear cart
+5. Session preserves cart data across all requests
+
+![Q40c Output](Pictures/40c.png)
+
+![Q40d Output](Pictures/40d.png)
+
+---
+
+## Day 5 — Spring Framework
+
+**Project:** `Spring/` (standalone Java apps using Spring Context)
+
+All programs use `AnnotationConfigApplicationContext` with `spring-context` 6.1.x. Run each via `mvn compile exec:java`.
+
+---
+
+#### Q46 — Field Injection with @Autowired
+**Files:** `Spring/src/main/java/day5/q46/MessageService.java`, `day5/q46/App.java`, `day5/q46/AppConfig.java`
+
+Demonstrates field injection using `@Autowired` annotation. A `@Component` class (`MessageService`) is injected into another `@Component` (`App`) via `@Autowired` on a private field. Spring's container automatically resolves and injects the dependency.
+
+**Concepts:** `@Component`, `@Autowired` (field injection), `AnnotationConfigApplicationContext`
+
+```bash
+cd Spring && mvn compile exec:java -Dexec.mainClass="day5.q46.App"
+```
+
+**Output:**
+```
+=== Q46 - Field Injection with @Autowired ===
+Hello from Spring Framework! Field Injection with @Autowired demo.
+```
+
+---
+
+#### Q47 — Java-based Configuration with @Configuration and @Bean
+**Files:** `Spring/src/main/java/day5/q47/App.java`, `day5/q47/DataSource.java`, `day5/q47/UserService.java`
+
+Configures Spring beans using pure Java with `@Configuration` class and `@Bean` factory methods. A `DataSource` bean and a `UserService` bean are defined via `@Bean` methods, with `UserService` receiving `DataSource` as a constructor parameter wired through method calls.
+
+**Concepts:** `@Configuration`, `@Bean`, method-level dependency injection, Java-based Spring configuration
+
+```bash
+cd Spring && mvn compile exec:java -Dexec.mainClass="day5.q47.App"
+```
+
+**Output:**
+```
+=== Q47 - Java-based Configuration with @Configuration and @Bean ===
+DataSource bean: DataSource{url='jdbc:mysql://localhost:3306/demo_db', username='root'}
+UserService connected to: DataSource{url='jdbc:mysql://localhost:3306/demo_db', username='root'}
+```
+
+---
+
+#### Q48 — Component Scanning with @Component, @Service, @Repository
+**Files:** `Spring/src/main/java/day5/q48/App.java`, `day5/q48/UserRepository.java`, `day5/q48/UserService.java`, `day5/q48/UserValidator.java`
+
+Demonstrates auto-detection of Spring-managed components using stereotype annotations. `@Repository` for data access, `@Service` for business logic, and `@Component` for utility classes. Spring's component scan automatically discovers and registers all three.
+
+**Concepts:** `@Component`, `@Service`, `@Repository`, stereotype annotation differences, component scanning
+
+```bash
+cd Spring && mvn compile exec:java -Dexec.mainClass="day5.q48.App"
+```
+
+**Output:**
+```
+=== Q48 - Component Scanning with @Component, @Service, @Repository ===
+All Users:
+  - Amit Verma
+  - Priya Sharma
+  - Rahul Singh
+  - Neha Gupta
+
+Validate 'Amit': true
+Validate '': false
+
+Beans registered by component scanning:
+  - appConfig
+  - userRepository
+  - userService
+  - userValidator
+```
+
+---
+
+#### Q49 — Full Annotation-based Configuration with @Configuration and @ComponentScan
+**Files:** `Spring/src/main/java/day5/q49/App.java`, `day5/q49/AppConfig.java`, `day5/q49/DataProcessor.java`, `day5/q49/NotificationService.java`, `day5/q49/ConfigRepo.java`
+
+Combines all annotation-based configuration approaches in a single application. `@Configuration` class with `@ComponentScan` scans for `@Component`, `@Service`, and `@Repository` beans while also defining a `@Bean` method. Demonstrates how all annotation-based config mechanisms work together.
+
+**Concepts:** `@Configuration`, `@ComponentScan`, `@Bean`, `@Component`, `@Service`, `@Repository`, combined annotation-based config
+
+```bash
+cd Spring && mvn compile exec:java -Dexec.mainClass="day5.q49.App"
+```
+
+**Output:**
+```
+=== Q49 - Full Annotation-based Configuration ===
+Data fetched from ConfigRepo using @Repository
+NotificationService sending: Processed data from DataProcessor using @Component
+
+@Bean defined appVersion: 1.0.0
+
+All beans in context:
+  - appConfig
+  - configRepo
+  - dataProcessor
+  - notificationService
+  - appVersion
+```
+
+---
+
+## Day 6 — Spring Boot
+
+**Project:** `SpringBoot/` (single Spring Boot app with separate packages for each question)
+
+Spring Boot 3.2.5 application with H2 in-memory database, MySQL connector (runtime), and `JdbcTemplate`. All three programs run sequentially when the app starts via `CommandLineRunner` interfaces.
+
+---
+
+#### Q54 — Maven Dependency Management
+**File:** `SpringBoot/src/main/java/day6/q54/DependencyCheck.java`
+
+Demonstrates Maven dependency management by integrating external dependencies (H2 database, MySQL connector) and verifying they resolve correctly. A `@Component` uses `@PostConstruct` to connect to the auto-configured `DataSource` and prints database metadata.
+
+**Concepts:** Maven dependency resolution, `spring-boot-starter` transitive dependencies, external dependency integration, `@PostConstruct`
+
+---
+
+#### Q55 — Modular User Service with Constructor Injection
+**Files:** `SpringBoot/src/main/java/day6/q55/User.java`, `day6/q55/UserRepository.java`, `day6/q55/UserService.java`, `day6/q55/UserCommandLineRunner.java`
+
+Creates a modular application with a proper service layer architecture. `UserRepository` (`@Repository`) provides in-memory CRUD operations. `UserService` (`@Service`) uses constructor injection (no `@Autowired` needed on single constructors in Spring Boot) to receive the repository. A `CommandLineRunner` demonstrates create, read, and delete operations.
+
+**Concepts:** `@Component`, `@Repository`, `@Service`, constructor injection, service layer architecture, `CommandLineRunner`
+
+---
+
+#### Q56 — Full User Profile Application (JDBC + H2)
+**Files:** `SpringBoot/src/main/java/day6/q56/User.java`, `day6/q56/UserRepository.java`, `day6/q56/UserService.java`, `day6/q56/AppConfig.java`, `day6/q56/DataInitializer.java`, `src/main/resources/schema.sql`, `src/main/resources/data.sql`
+
+Case study combining all Spring concepts into one application. Uses `@Configuration` + `@ComponentScan`, `@Component`/`@Service`/`@Repository` stereotypes, `JdbcTemplate` for real JDBC persistence against an H2 in-memory database, and SQL initialization scripts (`schema.sql`, `data.sql`). Demonstrates full CRUD: pre-loaded data from SQL, create, update, delete, and count operations.
+
+**Concepts:** `@Configuration`, `@ComponentScan`, `@Bean`, `@Component`, `@Service`, `@Repository`, `JdbcTemplate`, H2 in-memory DB, SQL initialization, full CRUD operations
+
+```bash
+cd SpringBoot && mvn spring-boot:run
+```
+
+**Output:**
+```
+=== Q54 - Maven Dependency Management ===
+Successfully connected to database via Spring Boot auto-configured DataSource!
+Database Product: H2
+Database Version: 2.2.224 (2023-09-17)
+Driver: H2 JDBC Driver 2.2.224 (2023-09-17)
+
+=== Q55 - User Service with Constructor Injection ===
+--- Creating Users ---
+--- All Users ---
+User{id=1, name='Amit Verma', email='amit@gmail.com'}
+...
+
+=== Q56 - Full User Profile App (JDBC + H2) ===
+--- Users from data.sql (pre-loaded) ---
+User{id=1, name='Amit Verma', email='amit@gmail.com'}
+...
+```
+
+---
+
 ## How to Run
 
 ### Using Maven (Linux / macOS / Windows WSL)
@@ -427,6 +663,41 @@ These require Apache Tomcat 10.1.x.
    # Or: ./compile.sh tomcat-stop
    ```
 
+#### Run Spring Programs (Q46-Q49)
+
+These are standalone Java apps in the `Spring/` directory. No server needed.
+
+```bash
+cd Spring
+
+# Build
+mvn compile
+
+# Run individual programs
+mvn compile exec:java -Dexec.mainClass="day5.q46.App"    # Field Injection
+mvn compile exec:java -Dexec.mainClass="day5.q47.App"    # Java Config
+mvn compile exec:java -Dexec.mainClass="day5.q48.App"    # Component Scanning
+mvn compile exec:java -Dexec.mainClass="day5.q49.App"    # Full Annotation Config
+```
+
+#### Run Spring Boot Programs (Q54-Q56)
+
+All three programs run sequentially in the `SpringBoot/` directory. Uses H2 in-memory database (no external DB needed).
+
+```bash
+cd SpringBoot
+
+# Build
+mvn compile
+
+# Run all programs (Q54, Q55, Q56 execute in sequence)
+mvn spring-boot:run
+
+# Or build and run the JAR
+mvn clean package
+java -jar target/springboot-day6-1.0-SNAPSHOT.jar
+```
+
 ### Using compile.sh (Convenience Script)
 
 ```bash
@@ -444,10 +715,10 @@ These require Apache Tomcat 10.1.x.
 3. Run `compile.bat` from the command line.
 4. For JDBC programs (Q1-Q9), compile and run directly with javac/java.
 
-### Quick Reference: All Servlet URLs
+### Quick Reference: All Programs
 
-| Q | Type | URL |
-|---|------|-----|
+| Q | Type | URL / Command |
+|---|------|---------------|
 | 10 | Servlet | `http://localhost:8080/AJP/EmployeeDetails` |
 | 11 | Servlet | `http://localhost:8080/AJP/employee_registration.html` |
 | 12 | Servlet | `http://localhost:8080/AJP/name_password_form.html` |
@@ -469,6 +740,15 @@ These require Apache Tomcat 10.1.x.
 | 32 | JSP | `http://localhost:8080/AJP/Q32_visitor.jsp` |
 | 33 | JSP | `http://localhost:8080/AJP/Q33_index.jsp` |
 | 34 | JSP | `http://localhost:8080/AJP/Q34_arith.html` |
+| 39 | JSP | `http://localhost:8080/AJP/Q39_empSelect.jsp` |
+| 40a | JSP | `http://localhost:8080/AJP/Q40a_register.jsp` |
+| 40b | JSP | `http://localhost:8080/AJP/Q40b_login.jsp` |
+| 40c | Servlet | `http://localhost:8080/AJP/ShoppingCart` |
+| 46 | Spring | `cd Spring && mvn exec:java -Dexec.mainClass="day5.q46.App"` |
+| 47 | Spring | `cd Spring && mvn exec:java -Dexec.mainClass="day5.q47.App"` |
+| 48 | Spring | `cd Spring && mvn exec:java -Dexec.mainClass="day5.q48.App"` |
+| 49 | Spring | `cd Spring && mvn exec:java -Dexec.mainClass="day5.q49.App"` |
+| 54-56 | Spring Boot | `cd SpringBoot && mvn spring-boot:run` |
 
 ---
 
@@ -481,6 +761,9 @@ These require Apache Tomcat 10.1.x.
 | MySQL | 9.x |
 | MySQL Connector/J | 9.7.0 |
 | Jakarta Servlet API | 6.0 |
+| Spring Framework | 6.1.12 |
+| Spring Boot | 3.2.5 |
+| H2 Database | 2.2.224 |
 | Build System | Maven 3.9+ |
 | IDE | VS Code (recommended) or Eclipse |
 
@@ -488,31 +771,40 @@ These require Apache Tomcat 10.1.x.
 
 ```
 AJP/
-├── pom.xml                         # Maven build file
+├── pom.xml                         # Maven build file (Servlet/JSP project)
 ├── compile.sh                      # Linux build/deploy convenience script
 ├── compile.bat                     # Windows build script (legacy)
 ├── mysql-connector-j-9.7.0.jar     # MySQL JDBC driver
-├── src/
+├── src/                            # Servlet/JSP project sources (Day 1-3)
 │   └── main/
-│       ├── java/                   # Java sources
-│       │   ├── classWork/          # JDBC standalone programs (Q1-Q6)
-│       │   │   └── servlet/        # Classwork servlets (Q11-Q17)
-│       │   └── homeWork/           # JDBC standalone programs (Q7-Q9)
-│       │       └── servlet/        # Homework servlets (Q10, Q18-Q22b)
-│       └── webapp/                 # Web content
-│           ├── WEB-INF/
-│           │   ├── web.xml         # Deployment descriptor
-│           │   └── lib/            # JARs (mysql-connector)
-│           └── *.html              # Static HTML forms
+│       ├── java/
+│       │   ├── classWork/          # JDBC programs (Q1-Q6) + servlets (Q11-Q17)
+│       │   └── homeWork/           # JDBC programs (Q7-Q9) + servlets (Q10, Q18-Q22b)
+│       └── webapp/                 # Web content (HTML, JSP, WEB-INF)
+├── Spring/                         # Day 5 — Spring Framework (standalone apps)
+│   ├── pom.xml                     # spring-context 6.1.12
+│   └── src/main/java/day5/
+│       ├── q46/                    # Field Injection with @Autowired
+│       ├── q47/                    # Java-based Config (@Configuration, @Bean)
+│       ├── q48/                    # Component Scanning
+│       └── q49/                    # Full Annotation-based Config
+├── SpringBoot/                     # Day 6 — Spring Boot (single app, multi-package)
+│   ├── pom.xml                     # spring-boot-starter 3.2.5 + H2 + MySQL
+│   └── src/main/
+│       ├── java/day6/
+│       │   ├── Day6Application.java
+│       │   ├── q54/                # Maven dependency management
+│       │   ├── q55/                # User Service with constructor injection
+│       │   └── q56/                # Full user profile app (JDBC + H2)
+│       └── resources/
+│           ├── application.properties
+│           ├── schema.sql
+│           └── data.sql
 ├── .vscode/                        # VS Code workspace config
-│   ├── settings.json
-│   ├── tasks.json
-│   └── extensions.json
 ├── target/                         # Maven build output (gitignored)
-│   ├── classes/
-│   └── AJP.war
 ├── Pictures/                       # Screenshots
 └── README.md
+```
 
 ---
 
@@ -526,9 +818,9 @@ All programs use:
 Databases used:
 | Database | Used By |
 |----------|---------|
-| `demo_db` | Q1, Q2, Q3, Q4, Q6, Q7, Q10, Q11, Q12, Q17, Q21, Q22a, Q22b |
+| `demo_db` | Q1, Q2, Q3, Q4, Q6, Q7, Q10, Q11, Q12, Q17, Q21, Q22a, Q22b, Q40a, Q40b |
 | `bank_db` | Q5 |
 | `company` | Q8 |
-| `employee_db` | Q9, Q10, Q18 |
+| `employee_db` | Q9, Q10, Q18, Q39 |
 
 Tables are auto-created by each program if they don't exist.

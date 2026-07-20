@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head><title>Product Selection</title></head>
+<body>
+    <h2>Q40c - Shopping Cart: Select Products</h2>
+<%
+    String user = (String) session.getAttribute("loggedUser");
+    if (user == null) {
+        response.sendRedirect("Q40b_login.jsp");
+        return;
+    }
+%>
+    <h3 style="color:green;">Welcome, <%= user %>!</h3>
+    <form action="ShoppingCart" method="post">
+        <input type="hidden" name="action" value="add">
+        <fieldset>
+            <legend>Select Products to Add:</legend>
+            <input type="checkbox" name="items" value="Laptop"> Laptop - Rs.55,000<br>
+            <input type="checkbox" name="items" value="Phone"> Phone - Rs.25,000<br>
+            <input type="checkbox" name="items" value="Headphones"> Headphones - Rs.2,500<br>
+            <input type="checkbox" name="items" value="Mouse"> Mouse - Rs.800<br>
+            <input type="checkbox" name="items" value="Keyboard"> Keyboard - Rs.1,200<br>
+            <input type="checkbox" name="items" value="Monitor"> Monitor - Rs.18,000<br>
+        </fieldset>
+        <br>
+        <input type="submit" value="Add to Cart">
+    </form>
+    <br>
+    <a href="ShoppingCart">View Cart</a>
+    |
+    <a href="Q40b_login.jsp">Logout</a>
+</body>
+</html>
